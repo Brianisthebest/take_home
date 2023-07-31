@@ -14,7 +14,7 @@ RSpec.describe 'GET /api/v0/customers/:id/subscriptions', type: :request do
       get "/api/v0/customers/#{customer.id}/subscriptions", headers: headers
 
       json = JSON.parse(response.body, symbolize_names: true)
-require 'pry'; binding.pry
+
       expect(response).to be_successful
       expect(response.status).to eq(200)
       expect(json[:data].count).to eq(2)
