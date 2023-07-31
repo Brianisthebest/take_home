@@ -1,5 +1,6 @@
 class Api::V0::SubscriptionsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_invalid_response
+  rescue_from ActiveRecord::RecordNotFound, with: :render_invalid_response
 
   def create
     @subscription = Subscription.create!(subscription_params)

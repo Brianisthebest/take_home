@@ -32,10 +32,9 @@ RSpec.describe 'DELETE /api/v0/subscriptions/:id', type: :request do
       
       json = JSON.parse(response.body, symbolize_names: true)
 
-      require 'pry'; binding.pry
       expect(response).to_not be_successful
       expect(response.status).to eq(400)
-      expect(json[:errors]).to eq("Couldn't find Subscription with 'id'=5")
+      expect(json[:errors]).to eq("Couldn't find Subscription with [WHERE \"subscriptions\".\"id\" = $1]")
     end
   end
 end
