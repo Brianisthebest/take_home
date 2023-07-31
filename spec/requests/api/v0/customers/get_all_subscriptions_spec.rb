@@ -14,7 +14,7 @@ RSpec.describe 'GET /api/v0/customers/:id/subscriptions', type: :request do
       get "/api/v0/customers/#{customer.id}/subscriptions", headers: headers
 
       json = JSON.parse(response.body, symbolize_names: true)
-
+require 'pry'; binding.pry
       expect(response).to be_successful
       expect(response.status).to eq(200)
       expect(json[:data].count).to eq(2)
@@ -38,6 +38,20 @@ RSpec.describe 'GET /api/v0/customers/:id/subscriptions', type: :request do
       expect(json[:data][1][:attributes][:price]).to eq(subscription_2.price)
       expect(json[:data][1][:attributes][:status]).to eq(subscription_2.status)
       expect(json[:data][1][:attributes][:frequency]).to eq(subscription_2.frequency)
+    end
+  end
+
+  describe 'sad path' do
+    it 'returns an error if no customer exists' do
+      headers = { 'CONTENT_TYPE' => 'application/json' }
+
+      get "/api/v0/customers/5/subscriptions", headers: headers
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+      expect(json[:errors]).to eq("Couldn't find Customer with id 5")
     end
   end
 end
