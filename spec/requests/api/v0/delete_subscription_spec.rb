@@ -24,5 +24,18 @@ RSpec.describe 'DELETE /api/v0/subscriptions/:id', type: :request do
       expect(json[:data][:attributes][:status]).to eq('Cancelled')
       expect(json[:data][:attributes][:frequency]).to eq(subscription.frequency)
     end
+
+    it 'returns an error if no subscription exists with that id' do
+      headers = { 'CONTENT_TYPE' => 'application/json' }
+
+      delete "/api/v0/subscriptions/5", headers: headers
+      
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      require 'pry'; binding.pry
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+      expect(json[:errors]).to eq("Couldn't find Subscription with 'id'=5")
+    end
   end
 end
