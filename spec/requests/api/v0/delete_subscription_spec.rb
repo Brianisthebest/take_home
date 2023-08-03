@@ -9,7 +9,7 @@ RSpec.describe 'DELETE /api/v0/subscriptions/:id', type: :request do
 
       headers = { 'CONTENT_TYPE' => 'application/json' }
 
-      delete "/api/v0/subscriptions/#{subscription.id}", headers: headers
+      patch "/api/v0/subscriptions/#{subscription.id}", headers: headers
       
       json = JSON.parse(response.body, symbolize_names: true)
 
@@ -28,7 +28,7 @@ RSpec.describe 'DELETE /api/v0/subscriptions/:id', type: :request do
     it 'returns an error if no subscription exists with that id' do
       headers = { 'CONTENT_TYPE' => 'application/json' }
 
-      delete "/api/v0/subscriptions/5", headers: headers
+      patch "/api/v0/subscriptions/5", headers: headers
       
       json = JSON.parse(response.body, symbolize_names: true)
 
