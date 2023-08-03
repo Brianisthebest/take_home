@@ -7,7 +7,7 @@ class Api::V0::SubscriptionsController < ApplicationController
     render json: SubscriptionSerializer.new(@subscription), status: 201
   end
 
-  def destroy
+  def update
     @subscription = Subscription.find_by_id!(params[:id])
     @subscription.change_status_to_cancelled
     render json: SubscriptionSerializer.new(@subscription), status: 200
